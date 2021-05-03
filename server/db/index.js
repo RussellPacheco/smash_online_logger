@@ -15,6 +15,7 @@ const db = knex({
     migrations: {
       directory: __dirname + "/migrations",
       tableName: 'knex_migrations'
-    })
+    }
+})
 
 module.exports = db;

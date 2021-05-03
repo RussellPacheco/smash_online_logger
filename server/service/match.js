@@ -2,21 +2,23 @@ const dao = require("../dao/match")
 
 function createMatch(newMatch) {
 
-    const { player, opponent, winner, disconnected, timestamp } = newMatch
+    let { player, opponent, winner, disconnected, timestamp } = newMatch
 
     if (timestamp === undefined) {
-        const date = new Date()        
+        timestamp = new Date()        
     }
 
     if (disconnected === undefined) {
         disconnected = "noone"
     }
 
-    dao.createMatch(player, opponent, winner, disconnected, timestamp)
+    return dao.createMatch(player, opponent, winner, disconnected, timestamp)
 }
 
 function getMatches(newMatch) {
+
+    return dao.getMatches(newMatch)
     
 }
 
-module.exports = createMatch
+module.exports = { createMatch, getMatches }

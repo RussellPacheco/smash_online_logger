@@ -6,7 +6,6 @@ const router = express.Router()
 
 router.get("/match/:opponent", matchController.getMatches)
 
-
 router.post("/match", matchController.createMatch)
 
 module.exports = router;
