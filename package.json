@@ -6,6 +6,7 @@
     "node": "14.x"
   },
   "scripts": {
+    "start": "node server",
     "dev:server": "nodemon server",
     "dev:client": "vue-cli-service serve",
     "migrate:make": "",
