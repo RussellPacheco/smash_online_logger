@@ -5,7 +5,8 @@ const db = knex({
     connection: {
       connectionString:
         process.env.DATABASE_URL ||
-        `postgres://${process.env.DATABASE_USER}:${process.env.DATABASE_PW}@127.0.0.1:5432/smash`
+        `postgres://${process.env.DATABASE_USER}:${process.env.DATABASE_PW}@127.0.0.1:5432/smash`,
+      ssl: { rejectUnauthorized: false },      
     },
     searchPath: "public",
     pool: {
