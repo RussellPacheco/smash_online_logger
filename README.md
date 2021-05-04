@@ -1,5 +1,7 @@
 # smash_online_logger
 
+https://smashlogs.herokuapp.com/
+
 ## Project setup
 ```
 npm install
