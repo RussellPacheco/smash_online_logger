@@ -1,36 +1,77 @@
 <template>
+    <div>
+    <NewAccount v-if="this.$store.state.createAccountToggle" />
+    <div class="title-bar">
+        <div class="create-account" @click="createAccount" >Create Account</div>
+    </div>
     <div class="login-container">
         <div class="title">Smash Online Logger</div>
+        <div :class="[this.$store.state.loginToggle ? this.visibleError : this.hiddenError]">{{this.$store.state.loginError}}</div>
         <form class="form">
-            <div></div>
             <input v-model="username" type="text" placeholder="Username"/>
-            <input placeholder="Password"/>
-            <button @click="onClick">Login</button>
+            <input v-model="password" type="password" placeholder="Password"/>
+            <button @click.prevent="onClick">Login</button>
         </form>
-    </div>  
+    </div> 
+    </div> 
 </template>
 
 <script>
+import NewAccount from "./NewAccount.vue"
+
 export default {
     name: "Login",
+    components: {
+        NewAccount
+    },
+
     data() {
         return {
-            username: ""
+            username: "",
+            password: "",
+            visibleError: "visibleerror",
+            hiddenError: "hiddenerror",
         }
     },
 
     methods: {
         onClick() {
-            // this.$store.commit("setUsername, this.username")
-            this.$store.commit("setPlayer", this.username)
-            this.$store.commit("setLoginToggle")
-        }
+            this.$store.dispatch("verifyLogin", {username: this.username, password: this.password})
+        },
 
+        createAccount() {
+            this.$store.commit("toggleCreateAccount")
+        }
     }
 }
 </script>
 
 <style scoped>
+
+.create-account {
+    float: right;
+    margin-right: 1%;
+    cursor: pointer;
+}
+
+
+.visibleerror {
+    color:red;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    margin-bottom: 1%;
+
+}
+
+.hiddenerror {
+    visibility: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    margin-bottom: 1%;
+
+}
 
 .login-container {
     display: flex;
@@ -48,7 +89,6 @@ export default {
 .form {
     display:flex;
     flex-direction: column;
-    margin-top: 2%;
     margin-left: auto;
     margin-right: auto;
 }

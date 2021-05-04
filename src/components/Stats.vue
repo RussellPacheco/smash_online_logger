@@ -1,53 +1,53 @@
 <template>
+    <div>
+    <div class="title-bar">
+        <div class="title">Smash Online Logger</div>
+        <div class="opponent-tag">Current Opponent: {{this.$store.state.opponent}}</div>
+    </div>
     <div class="stats-container">
-        <div class="title-bar">
-            <div class="title">Smash Online Logger</div>
-            <div class="opponent-tag">Current Opponent: {{this.$store.state.opponent}}</div>
+        <div class="left-col">
+            <div>Last Time Played: {{this.$store.state.latestMatch}}</div>
+            <div>Total times played against: {{this.$store.state.totalMatches}}</div>
+            <div>Amount of times D/Ced: {{this.$store.state.dc}}</div>
+            <div>Won Against: {{this.$store.state.wins}}</div>
+            <div>Lost Against: {{this.$store.state.loss}}</div>
         </div>
-        <div class="lower-row">
-            <div class="left-col">
-                <div>Last Time Played: {{this.$store.state.latestMatch}}</div>
-                <div>Total times played against: {{this.$store.state.totalMatches}}</div>
-                <div>Amount of times D/Ced: {{this.$store.state.dc}}</div>
-                <div>Won Against: {{this.$store.state.wins}}</div>
-                <div>Lost Against: {{this.$store.state.loss}}</div>
-            </div>
-            <div class="right-col">
-                <form>
-                    <div class="form-option">
-                        <div class="form-title">Currently played?</div>
-                        <label for="currently-played yes">Yes
-                            <input id="currently-played yes" v-model="currentlyPlayedYes" type="checkbox" />
-                        </label>                        
-                        <label for="currently-played no">No
-                            <input id="currently-played no" v-model="currentlyPlayedNo" @change="toggleTimeConfirm" type="checkbox" />
-                        </label>
-                    </div>
-                    <TimeConfirmModal v-if="this.timeConfirmShow" />
-                    <div class="form-option">
-                        <div class="form-title">Opponent D/Ced?</div>
-                        <label for="opponent-dced yes">Yes
-                            <input id="opponent-dced yes" v-model="opponentDcedYes" type="checkbox" />
-                        </label>
-                        <label for="opponent-dced no">No
-                            <input id="opponent-dced no" v-model="opponentDcedNo" type="checkbox" />
-                        </label>
-                    </div>
-                    <div class="form-option">
-                        <div class="form-title">Did you win?</div>
-                        <label for="win yes">Yes
-                            <input id="win yes" v-model="winYes" type="checkbox" />
-                        </label>
-                        <label for="win no">No
-                            <input id="win no" v-model="winNo" type="checkbox" />
-                        </label>
-                    </div>
-                    <div class="submit">
-                        <input type="button" @click="onClick" value="Submit" />
-                    </div>
-                </form>
-            </div>
+        <div class="right-col">
+            <form>
+                <div class="form-option">
+                    <div class="form-title">Currently played?</div>
+                    <label for="currently-played yes">Yes
+                        <input id="currently-played yes" v-model="currentlyPlayedYes" type="checkbox" />
+                    </label>                        
+                    <label for="currently-played no">No
+                        <input id="currently-played no" v-model="currentlyPlayedNo" @change="toggleTimeConfirm" type="checkbox" />
+                    </label>
+                </div>
+                <TimeConfirmModal v-if="this.timeConfirmShow" />
+                <div class="form-option">
+                    <div class="form-title">Opponent D/Ced?</div>
+                    <label for="opponent-dced yes">Yes
+                        <input id="opponent-dced yes" v-model="opponentDcedYes" type="checkbox" />
+                    </label>
+                    <label for="opponent-dced no">No
+                        <input id="opponent-dced no" v-model="opponentDcedNo" type="checkbox" />
+                    </label>
+                </div>
+                <div class="form-option">
+                    <div class="form-title">Did you win?</div>
+                    <label for="win yes">Yes
+                        <input id="win yes" v-model="winYes" type="checkbox" />
+                    </label>
+                    <label for="win no">No
+                        <input id="win no" v-model="winNo" type="checkbox" />
+                    </label>
+                </div>
+                <div class="submit">
+                    <input type="button" @click="onClick" value="Submit" />
+                </div>
+            </form>
         </div>
+    </div>
     </div>  
 </template>
 
@@ -121,13 +121,15 @@ export default {
 
 .stats-container {
     display: flex;
-    flex-direction: column;
+    margin-top: 7%;
 }
 
 .title-bar {
-    border-style: solid;
+    border-style: none none solid;
     display: flex;
     justify-content: space-between;
+    width: 99.75vw;
+    margin-left: -0.25%
 }
 
 .title {
@@ -146,10 +148,10 @@ export default {
     font-size: 20px;
 }
 
-.lower-row {
-    display: flex;
-    justify-content: space-around;
+.left-col, form {
+    border-radius: 10px;
 }
+
 
 .left-col {
     display: flex;

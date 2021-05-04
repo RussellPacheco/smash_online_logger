@@ -2,8 +2,9 @@
     <div class="getopponent-container">
         <div class="title">Who are you playing now?</div>
         <form class="form">
+            <div :class="[this.toggleError ? this.visibleError : this.hiddenError]">Must be a valid opponent!</div>
             <input v-model="opponent" placeholder="Opponent's Tag" />
-            <button class="button" @click="onClick">Submit</button>
+            <button class="button" @click.prevent="onClick">Submit</button>
         </form>
     </div>
 </template>
@@ -13,14 +14,21 @@ export default {
     name: "GetOpponent",
     data() {
         return {
-            opponent: ""
+            opponent: "",
+            visibleError: "visibleerror",
+            hiddenError: "hiddenerror",
+            toggleError: false
         }
     },
     methods: {
         onClick() {
-            this.$store.commit("setOpponent", this.opponent)
-            this.$store.commit("setOpponentToggle")
-            this.$store.dispatch("getMatches")
+            if (this.opponent === "") {
+                this.toggleError = true                
+            } else {
+                this.$store.commit("setOpponent", this.opponent)
+                this.$store.commit("setOpponentToggle")
+                this.$store.dispatch("getMatches")
+            }   
         }
     }
 
@@ -28,6 +36,15 @@ export default {
 </script>
 
 <style scoped>
+
+.visibleerror {
+    color:red;
+    margin: auto;
+}
+
+.hiddenerror {
+    visibility: hidden;
+}
 
 .getopponent-container {
     display: flex;

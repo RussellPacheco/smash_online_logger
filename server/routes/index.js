@@ -8,4 +8,8 @@ router.get("/match/:player/:opponent", matchController.getMatches)
 
 router.post("/match", matchController.createMatch)
 
+router.post("/user/login", matchController.getUser)
+
+router.post("/user", matchController.createUser)
+
 module.exports = router;

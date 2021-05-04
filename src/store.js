@@ -16,13 +16,26 @@ export default new Vuex.Store({
         dc: 0,
         wins: 0,
         loss: 0,
-        matchTime: ""
+        matchTime: "",
+        loginError: "",
+        loginToggle: false,
+        createAccountToggle: false
     },
 
     mutations: {
+        toggleCreateAccount(state) {
+            if (state.createAccountToggle) {
+                state.createAccountToggle = false
+            } else {
+                state.createAccountToggle = true
+            }
+        },
+
         setLoginToggle(state) {
             state.loginShow = false
             state.getOpponentShow = true
+            state.loginToggle = false
+            state.loginError = ""
         },
 
         setOpponentToggle(state) {
@@ -55,12 +68,19 @@ export default new Vuex.Store({
             if (payload.latestMatch !== "Never Played Before") {
                 const date = new Date(payload.latestMatch)
                 state.latestMatch = `${date.toLocaleDateString()} @ ${date.toLocaleTimeString()}`
-            } 
+            } else {
+                state.latestMatch = "Never Played Before"
+            }
             state.totalMatches = payload.totalMatches
             state.dc = payload.dc
             state.wins = payload.wins
             state.loss = payload.loss
         }, 
+
+        setLoginError(state, payload) {
+            state.loginError = payload
+            state.loginToggle = true
+        }
     },
 
     actions: {
@@ -91,14 +111,26 @@ export default new Vuex.Store({
 
             try {
                 const res = await axios.post("/match", data)
-                console.log(res)
             } catch (err) {
                 console.error(err)
             }
 
             state.matchTime = ""
+        },
 
-
+        async verifyLogin({ commit }, payload) {
+            console.log(payload)
+            try {
+                const res = await axios.post("/user/login", payload)
+                if (res.data === "Username and Password does not match" || res.data === "User doesn't exist") {
+                    commit("setLoginError", res.data)                    
+                } else {
+                    commit("setPlayer", res.data)
+                    commit("setLoginToggle")
+                }
+            } catch (err) {
+                console.error(err)
+            }
         }
     }
 });

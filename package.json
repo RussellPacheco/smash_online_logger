@@ -5,6 +5,7 @@
   "scripts": {
     "dev:server": "nodemon server",
     "dev:client": "vue-cli-service serve",
+    "migrate:make": "",
     "migrate:latest": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:latest --knexfile server/db/knexfile.js",
     "migrate:rollback": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:rollback --knexfile server/db/knexfile.js",
     "build": "vue-cli-service build",

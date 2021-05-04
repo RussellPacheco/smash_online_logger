@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Login v-if="this.$store.state.loginShow" />
+    <Login v-if="this.$store.state.loginShow && !this.$store.state.createAccountToggle" />
+    <NewAccount v-if="this.$store.state.createAccountToggle" />
     <GetOpponent v-if="this.$store.state.getOpponentShow" />
     <Stats v-if="this.$store.state.statsShow" />
   </div>
