@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import GetOpponent from './components/GetOpponent.vue'
+import GetOpponent from './components/getOpponent.vue'
 import Login from './components/Login.vue'
 import Stats from './components/Stats.vue'
 import NewAccount from "./components/NewAccount.vue"
