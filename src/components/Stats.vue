@@ -87,8 +87,8 @@ export default {
                 if(!this.winYes && this.winNo) {
                     data.winner = this.$store.state.opponent
                 }
-
                 this.$store.dispatch("createMatch", data)
+                this.$store.commit("setStatsToggle")
 
             } else {
                 alert("Please make sure either Yes or No is checked!")

@@ -96,6 +96,8 @@ export default new Vuex.Store({
                 console.error(err)
             }
 
+            state.matchTime = ""
+
 
         }
     }
