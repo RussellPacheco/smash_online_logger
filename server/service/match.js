@@ -1,35 +1,5 @@
 const dao = require("../dao/match")
-const bcrypt = require("bcrypt")
 
-async function createUser(newUser) {
-        
-    const { username, password, email, onlineTag } = newUser
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    return dao.createUser(username, hashedPassword, email, onlineTag)
-}
-
-async function getUser(loginDetails) {
-    const { username, password } = loginDetails
-
-    const results = await dao.getUser(username, password)
-
-    if (!results.length) {
-        return "User doesn't exist"
-    }
-
-    try {
-        if (await bcrypt.compare(password, results[0].password)) {
-            return results[0].online_tag
-        } else {
-            return "Username and Password does not match"
-        }
-    } catch (err) {
-        return err        
-    }
-
-}
 
 function createMatch(newMatch) {
 
@@ -78,4 +48,4 @@ async function getMatches(newMatch) {
     
 }
 
-module.exports = { createMatch, getMatches, createUser, getUser }
+module.exports = { createMatch, getMatches }

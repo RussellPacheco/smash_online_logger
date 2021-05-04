@@ -19,11 +19,13 @@ export default new Vuex.Store({
         matchTime: "",
         loginError: "",
         loginToggle: false,
-        createAccountToggle: false
+        createAccountToggle: false,
+        createUserError: "",
+        createUserErrorToggle: false
     },
 
     mutations: {
-        toggleCreateAccount(state) {
+        setCreateAccountToggle(state) {
             if (state.createAccountToggle) {
                 state.createAccountToggle = false
             } else {
@@ -80,6 +82,11 @@ export default new Vuex.Store({
         setLoginError(state, payload) {
             state.loginError = payload
             state.loginToggle = true
+        },
+
+        setUserErrorToggle(state, payload) {
+            state.createUserError = payload
+            state.createUserErrorToggle = true
         }
     },
 
@@ -119,7 +126,6 @@ export default new Vuex.Store({
         },
 
         async verifyLogin({ commit }, payload) {
-            console.log(payload)
             try {
                 const res = await axios.post("/user/login", payload)
                 if (res.data === "Username and Password does not match" || res.data === "User doesn't exist") {
@@ -127,6 +133,19 @@ export default new Vuex.Store({
                 } else {
                     commit("setPlayer", res.data)
                     commit("setLoginToggle")
+                }
+            } catch (err) {
+                console.error(err)
+            }
+        },
+
+        async createUser({ commit }, payload) {
+            try {
+                const res = await axios.post("/user", payload)
+                if (res.data !== "Completed") {
+                    commit("setUserErrorToggle", res.data)
+                } else {
+                    commit("setCreateAccountToggle")
                 }
             } catch (err) {
                 console.error(err)

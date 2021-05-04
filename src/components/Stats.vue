@@ -23,7 +23,7 @@
                         <input id="currently-played no" v-model="currentlyPlayedNo" @change="toggleTimeConfirm" type="checkbox" />
                     </label>
                 </div>
-                <TimeConfirmModal v-if="this.timeConfirmShow" />
+                <TimeConfirmModal :class="[this.timeConfirmShow ? timeVisible : timeHidden ]" />
                 <div class="form-option">
                     <div class="form-title">Opponent D/Ced?</div>
                     <label for="opponent-dced yes">Yes
@@ -66,6 +66,8 @@ export default {
             opponentDcedNo: false,
             winYes: false,
             winNo: false,
+            timeVisible: "time-visible",
+            timeHidden: "time-hidden"
         }
     },
 
@@ -118,6 +120,10 @@ export default {
 </script>
 
 <style scoped>
+
+.time-hidden {
+    visibility: hidden;
+}
 
 .stats-container {
     display: flex;

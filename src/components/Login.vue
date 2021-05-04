@@ -40,7 +40,7 @@ export default {
         },
 
         createAccount() {
-            this.$store.commit("toggleCreateAccount")
+            this.$store.commit("setCreateAccountToggle")
         }
     }
 }

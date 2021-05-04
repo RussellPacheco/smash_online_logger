@@ -32,7 +32,8 @@ export default {
 .time-confirm-modal-container {
     display: flex;
     flex-direction: column;
-    height: 25vh;
+    margin-top: -16%;
+    margin-bottom: 7%;
 }
 
 .time-confirm-title {

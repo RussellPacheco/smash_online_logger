@@ -20,24 +20,4 @@ async function getMatches(req, res) {
     }
 }
 
-async function createUser(req, res) {
-    try {
-        const data = await matchService.createUser(req.body)
-        res.status(201).json(data)
-    } catch (err) {
-        console.error(err)
-        res.status(500).json(err)
-    }
-}
-
-async function getUser(req, res) {
-    try {
-        const data = await matchService.getUser(req.body)
-        res.status(201).json(data)
-    } catch (err) {
-        console.error(err)
-        res.status(500).send()
-    }
-}
-
-module.exports = { createMatch, getMatches, createUser, getUser }
+module.exports = { createMatch, getMatches }
