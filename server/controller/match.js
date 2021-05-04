@@ -12,10 +12,10 @@ async function createMatch(req, res) {
 
 async function getMatches(req, res) {
     try {
-        const data = await matchService.getMatches(req.params.opponent)
+        const data = await matchService.getMatches(req.params)
         res.status(200).json(data)
     } catch(err) {
-        console.err(err)
+        console.error(err)
         res.status(404)
     }
 }

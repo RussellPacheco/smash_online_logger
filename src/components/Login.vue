@@ -3,7 +3,7 @@
         <div class="title">Smash Online Logger</div>
         <form class="form">
             <div></div>
-            <input placeholder="Username"/>
+            <input v-model="username" type="text" placeholder="Username"/>
             <input placeholder="Password"/>
             <button @click="onClick">Login</button>
         </form>
@@ -13,8 +13,16 @@
 <script>
 export default {
     name: "Login",
+    data() {
+        return {
+            username: ""
+        }
+    },
+
     methods: {
         onClick() {
+            // this.$store.commit("setUsername, this.username")
+            this.$store.commit("setPlayer", this.username)
             this.$store.commit("setLoginToggle")
         }
 

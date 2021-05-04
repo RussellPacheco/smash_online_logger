@@ -2,35 +2,44 @@
     <div class="stats-container">
         <div class="title-bar">
             <div class="title">Smash Online Logger</div>
-            <div class="opponent-tag">Current Opponent: Tag</div>
+            <div class="opponent-tag">Current Opponent: {{this.$store.state.opponent}}</div>
         </div>
         <div class="lower-row">
             <div class="left-col">
-                <div>Last Time Played:</div>
-                <div>Total times played against:</div>
-                <div>Amount of times D/Ced:</div>
-                <div>Won Against:</div>
-                <div>Lost Against:</div>
+                <div>Last Time Played: {{this.$store.state.latestMatch}}</div>
+                <div>Total times played against: {{this.$store.state.totalMatches}}</div>
+                <div>Amount of times D/Ced: {{this.$store.state.dc}}</div>
+                <div>Won Against: {{this.$store.state.wins}}</div>
+                <div>Lost Against: {{this.$store.state.loss}}</div>
             </div>
             <div class="right-col">
-                <TimeConfirmModal v-if="this.timeConfirmShow" />
                 <form>
                     <div class="form-option">
-                        <div class="form-title">Currently played:</div>
+                        <div class="form-title">Currently played?</div>
                         <label for="currently-played yes">Yes
-                            <input id="currently-played yes" type="checkbox" />
+                            <input id="currently-played yes" v-model="currentlyPlayedYes" type="checkbox" />
                         </label>                        
                         <label for="currently-played no">No
-                            <input id="currently-played no" @change="toggleTimeConfirm" type="checkbox" />
+                            <input id="currently-played no" v-model="currentlyPlayedNo" @change="toggleTimeConfirm" type="checkbox" />
+                        </label>
+                    </div>
+                    <TimeConfirmModal v-if="this.timeConfirmShow" />
+                    <div class="form-option">
+                        <div class="form-title">Opponent D/Ced?</div>
+                        <label for="opponent-dced yes">Yes
+                            <input id="opponent-dced yes" v-model="opponentDcedYes" type="checkbox" />
+                        </label>
+                        <label for="opponent-dced no">No
+                            <input id="opponent-dced no" v-model="opponentDcedNo" type="checkbox" />
                         </label>
                     </div>
                     <div class="form-option">
-                        <div class="form-title">Opponent D/Ced:</div>
-                        <label for="opponent-dced yes">Yes
-                            <input id="opponent-dced yes" type="checkbox" />
+                        <div class="form-title">Did you win?</div>
+                        <label for="win yes">Yes
+                            <input id="win yes" v-model="winYes" type="checkbox" />
                         </label>
-                        <label for="opponent-dced no">No
-                            <input id="opponent-dced no" type="checkbox" />
+                        <label for="win no">No
+                            <input id="win no" v-model="winNo" type="checkbox" />
                         </label>
                     </div>
                     <div class="submit">
@@ -48,10 +57,15 @@ import TimeConfirmModal from "./TimeConfirmModal.vue"
 
 export default {
     name: "Stats",
-
     data() {
         return {
-            timeConfirmShow: false
+            timeConfirmShow: false,
+            currentlyPlayedYes: false,
+            currentlyPlayedNo: false,
+            opponentDcedYes: false,
+            opponentDcedNo: false,
+            winYes: false,
+            winNo: false,
         }
     },
 
@@ -61,7 +75,34 @@ export default {
 
     methods: {
         onClick() {
-            this.$store.commit("setStatsToggle")
+            if (this.checkboxValidator()) {
+                let data = {
+                    winner: this.$store.state.player
+                }
+
+                if (this.opponentDcedYes && !this.opponentDcedNo) {
+                    data.dc = this.$store.state.opponent
+                }
+
+                if(!this.winYes && this.winNo) {
+                    data.winner = this.$store.state.opponent
+                }
+
+                this.$store.dispatch("createMatch", data)
+
+            } else {
+                alert("Please make sure either Yes or No is checked!")
+            }
+        },
+
+        checkboxValidator() {
+            if (!this.currentlyPlayedYes && !this.currentlyPlayedNo || !this.opponentDcedYes && !this.opponentDcedNo || !this.winYes && !this.winNo) {
+                return false
+            } else if (this.currentlyPlayedYes && this.currentlyPlayedNo || this.opponentDcedYes && this.opponentDcedNo || this.winYes && this.winNo) {
+                return false
+            }         
+            return true
+
         },
 
         toggleTimeConfirm() {
@@ -117,7 +158,6 @@ export default {
     margin-top: 2%;
     margin-left: auto;
     border-style: solid;
-    height: 80vh;
     width: 30vw;
 }
 
@@ -135,7 +175,6 @@ form {
     display: flex;
     flex-direction: column;
     border-style: solid;
-    height: 50vh;
     padding-top: 5%;
 }
 

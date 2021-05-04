@@ -2,7 +2,7 @@
     <div class="getopponent-container">
         <div class="title">Who are you playing now?</div>
         <form class="form">
-            <input placeholder="Opponent's Tag" />
+            <input v-model="opponent" placeholder="Opponent's Tag" />
             <button class="button" @click="onClick">Submit</button>
         </form>
     </div>
@@ -11,9 +11,16 @@
 <script>
 export default {
     name: "GetOpponent",
+    data() {
+        return {
+            opponent: ""
+        }
+    },
     methods: {
         onClick() {
+            this.$store.commit("setOpponent", this.opponent)
             this.$store.commit("setOpponentToggle")
+            this.$store.dispatch("getMatches")
         }
     }
 

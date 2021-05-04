@@ -13,13 +13,27 @@ async function createMatch(player, opponent, winner, disconnected, timestamp) {
     return id
 }
 
-async function getMatches(opponent) {
-    const data = await db("matches").where("opponent", opponent)
+async function getMatches(player, opponent) {
+    const data = await db("matches").where({
+        player: player,
+        opponent: opponent
+    })
+    .select("player", "opponent", "winner", "disconnected")
     
+    return data
+}
+
+async function getLatestMatch(player, opponent) {
+    const data = await db("matches").where({
+        player: player,
+        opponent: opponent
+    }).orderBy("timestamp", "desc").limit(1).select("timestamp")
+
     return data
 }
 
 module.exports = {
     createMatch,
-    getMatches
+    getMatches,
+    getLatestMatch
 }
