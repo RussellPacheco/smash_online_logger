@@ -2,15 +2,15 @@
     <div>
     <div class="title-bar">
         <div class="title">Smash Online Logger</div>
-        <div class="opponent-tag">Current Opponent: {{this.$store.state.opponent}}</div>
+        <div class="opponent-tag">Current Opponent: <span class="opponent-name">{{this.$store.state.opponent}}</span></div>
     </div>
     <div class="stats-container">
         <div class="left-col">
-            <div>Last Time Played: {{this.$store.state.latestMatch}}</div>
-            <div>Total times played against: {{this.$store.state.totalMatches}}</div>
-            <div>Amount of times D/Ced: {{this.$store.state.dc}}</div>
-            <div>Won Against: {{this.$store.state.wins}}</div>
-            <div>Lost Against: {{this.$store.state.loss}}</div>
+            <div class="left-col-title">Last Time Played: <span class="left-col-stats">{{this.$store.state.latestMatch}}</span></div>
+            <div class="left-col-title">Total times played against: <span class="left-col-stats">{{this.$store.state.totalMatches}}</span></div>
+            <div class="left-col-title">Amount of times D/Ced: <span class="left-col-stats">{{this.$store.state.dc}}</span></div>
+            <div class="left-col-title">Won Against: <span class="left-col-stats">{{this.$store.state.wins}}</span></div>
+            <div class="left-col-title">Lost Against: <span class="left-col-stats">{{this.$store.state.loss}}</span></div>
         </div>
         <div class="right-col">
             <form>
@@ -121,6 +121,27 @@ export default {
 
 <style scoped>
 
+.opponent-name {
+    font-weight: bold;
+}
+
+.left-col-stats {
+    font-family: fantasy;
+    font-size: 25px;
+    font-weight: bolder;
+    position: absolute;
+    margin-left: 1%;
+    margin-top: 0.4%;
+}
+
+.left-col-title, .form-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-right: auto;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
 .time-hidden {
     visibility: hidden;
 }
@@ -156,6 +177,7 @@ export default {
 
 .left-col, form {
     border-radius: 10px;
+
 }
 
 
@@ -200,4 +222,8 @@ form {
     margin: auto;
 }
 
+
+label {
+    font-weight: bold;
+}
 </style>
