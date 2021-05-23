@@ -23,14 +23,20 @@ async function getUser(loginDetails) {
     const results = await dao.getUser(username, password)
 
     if (!results.length) {
-        return "User doesn't exist"
+        return {
+            error: "User doesn't exist"
+        }
     }
 
     try {
         if (await bcrypt.compare(password, results[0].password)) {
-            return results[0].online_tag
+            return {
+                onlinetag: results[0].online_tag
+            }
         } else {
-            return "Username and Password does not match"
+            return { 
+                error: "Username and Password does not match"
+            }
         }
     } catch (err) {
         return err        

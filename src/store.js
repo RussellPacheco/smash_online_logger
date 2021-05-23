@@ -128,10 +128,10 @@ export default new Vuex.Store({
         async verifyLogin({ commit }, payload) {
             try {
                 const res = await axios.post("/user/login", payload)
-                if (res.data === "Username and Password does not match" || res.data === "User doesn't exist") {
-                    commit("setLoginError", res.data)                    
+                if (res.data.error === "Username and Password does not match" || res.data.error === "User doesn't exist") {
+                    commit("setLoginError", res.data.error)                    
                 } else {
-                    commit("setPlayer", res.data)
+                    commit("setPlayer", res.data.online_tag)
                     commit("setLoginToggle")
                 }
             } catch (err) {
